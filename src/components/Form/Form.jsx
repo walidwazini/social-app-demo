@@ -8,7 +8,6 @@ import { createPost, updatePost } from "../../actions/posts";
 
 const Form = ({ currentId, setCurrentId }) => {
   const initialState = {
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -17,6 +16,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [postData, setPostData] = useState(initialState);
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const edittingPost = useSelector((state) => {
     return currentId
@@ -28,7 +28,6 @@ const Form = ({ currentId, setCurrentId }) => {
 
   useEffect(() => {
     if (edittingPost) setPostData(edittingPost);
-    console.log(edittingPost);
   }, [edittingPost]);
 
   const convertBase64 = async (file) => {
@@ -63,13 +62,25 @@ const Form = ({ currentId, setCurrentId }) => {
 
     // if we have currentId
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
 
     clearInput();
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant='h6' align='center'>
+          Please sign in first.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -84,7 +95,7 @@ const Form = ({ currentId, setCurrentId }) => {
           {currentId ? "Editting" : "Creating"} a Memory
         </Typography>
 
-        <TextField
+        {/* <TextField
           name='creator'
           variant='outlined'
           label='Creator'
@@ -93,11 +104,12 @@ const Form = ({ currentId, setCurrentId }) => {
           onChange={(ev) =>
             setPostData({ ...postData, creator: ev.target.value })
           }
-        />
+        /> */}
         <TextField
           name='title'
           variant='outlined'
           label='Title'
+          style={{ color: "whitesmoke !important" }}
           fullWidth
           value={postData.title || ""}
           onChange={(ev) =>
@@ -115,7 +127,7 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
-          name='creator'
+          name='tags'
           variant='outlined'
           label='Tags'
           fullWidth
