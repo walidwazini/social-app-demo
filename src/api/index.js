@@ -17,6 +17,8 @@ const postUrl = `/posts`
 const authUrl = `/user`
 
 export const fetchPosts = () => API.get(postUrl)
+export const fetchPostBySearch =
+  searchQuery => API.get(`${postUrl}/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 export const createPost = (newPost) => API.post(postUrl, newPost)
 export const updatePost =
   (postId, updatedPost) => API.patch(`${postUrl}/${postId}`, updatedPost)
