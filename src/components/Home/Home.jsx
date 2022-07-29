@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grow,
@@ -16,7 +16,7 @@ import Form from "../Form/Form";
 import Posts from "../Posts/Posts";
 // import useStyles from "../../styles";
 import Paginate from "../Pagination";
-import { getPosts, getPostBySearch } from "../../actions/posts";
+import { getPostBySearch } from "../../actions/posts";
 import useStyles from "./styles";
 
 function useQuery() {
@@ -32,18 +32,25 @@ const Home = () => {
   const query = useQuery();
   const history = useHistory();
   const page = query.get("page") || 1;
-  const searchQuery = query.get("searchQuery");
+  // const searchQuery = query.get("searchQuery");
 
   const searchPost = () => {
     if (search.trim() || tags) {
       // tags : convert array into a string
       //   ['europe', 'usa'] -->  "europe,usa"
       dispatch(getPostBySearch({ search, tags: tags.join(",") }));
-      console.log("Here");
+      history.push(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
+      );
     } else {
       history.push("/");
     }
   };
+
+  // const searchPostByTitle = () => {
+  //   dispatch(getPostByTitle({ title: search }));
+  //   history.push(`/posts/byTitle?searchQuery=${search}`);
+  // };
 
   const handleKeyPress = (ev) => {
     if (ev.keyCode === 13) {
@@ -56,9 +63,10 @@ const Home = () => {
   const handleDeleteChip = (tagToDelete) =>
     setTags(tags.filter((tag) => tag !== tagToDelete));
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [currentId, dispatch]);
+
   return (
     <Grow in>
       <Container maxWidth='xl'>
@@ -104,9 +112,33 @@ const Home = () => {
                 Search
               </Button>
             </AppBar>
+            {/* <AppBar
+              className={classes.appBarSearch}
+              position='static'
+              color='inherit'
+            >
+              <TextField
+                onKeyDown={handleKeyPress}
+                name='search'
+                variant='outlined'
+                label='Search Memories'
+                fullWidth
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              <Button
+                onClick={searchPostByTitle}
+                className={classes.searchButton}
+                variant='contained'
+                color='secondary'
+              >
+                Search
+              </Button>
+            </AppBar> */}
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper className={classes.pagination} elevation={6}>
-              <Paginate />
+              <Paginate page={page} />
             </Paper>
           </Grid>
         </Grid>

@@ -1,22 +1,31 @@
-import { FETCH_ALL, CREATE, DELETE, UPDATE } from '../constants/actionTypes'
+import { FETCH_ALL, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH } from '../constants/actionTypes'
 
-export default (posts = [], action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case DELETE:
-      return posts.filter(post => post._id !== action.payload)
+      return state.filter(post => post._id !== action.payload)
     case FETCH_ALL:
-      console.log(action)
-      return action.payload
+      return {
+        ...state,
+        posts: action.payload.data,
+        currentPage: action.payload.currentPage,
+        numOfPages: action.payload.numOfPages
+      }
+    case FETCTH_BY_SEARCH:
+      return {
+        ...state,
+        posts: action.payload,
+      }
     case CREATE:
-      return [...posts, action.payload]
+      return [...state, action.payload]
     case UPDATE:
       // case LIKE:
-      return posts.map(post => {
+      return state.map(post => {
         return post._id === action.payload._id
           ? action.payload
           : post
       })
     default:
-      return posts
+      return state
   }
 }

@@ -1,11 +1,15 @@
+import Axios from 'axios'
 import * as api from '../api'
-import { FETCH_ALL, CREATE, DELETE, UPDATE } from '../constants/actionTypes'
+import { FETCH_ALL, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH } from '../constants/actionTypes'
 
 // Actions Creators
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
   try {
-    const response = await api.fetchPosts()
+    // const response = await api.fetchPosts()   
+    const response = await Axios.get(`http://localhost:5000/posts?page=${page}`)
     const responseData = response.data
+
+    console.log(responseData)
     dispatch({ type: FETCH_ALL, payload: responseData })
 
   } catch (err) {
@@ -14,12 +18,23 @@ export const getPosts = () => async (dispatch) => {
 }
 
 export const getPostBySearch = searchQuery => async (dispatch) => {
+  console.log(searchQuery)
   try {
-    const { data } = await api.fetchPostBySearch(searchQuery)
+    const { data: { data } } = await api.fetchPostBySearch(searchQuery)
+    dispatch({ type: FETCTH_BY_SEARCH, payload: data })
     console.log(data)
   } catch (err) {
     console.log(err)
+  }
+}
 
+export const getPostByTitle = searchQ => async (dispatch) => {
+  try {
+    const { data: { data } } = await api.fetchPostByTitle(searchQ)
+    dispatch({ type: FETCTH_BY_SEARCH, payload: data })
+    console.log(data)
+  } catch (err) {
+    console.log(err)
   }
 }
 

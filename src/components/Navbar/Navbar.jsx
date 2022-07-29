@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
@@ -16,17 +16,14 @@ const Navbar = () => {
   // const user = null;
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     dispatch({ type: "LOGOUT" });
-
     history.push("/");
-
     setUser(null);
-  };
+  }, [history, dispatch]);
 
   useEffect(() => {
     const token = user?.token;
-    console.log(token);
 
     if (token) {
       const deocdedToken = decode(token);
@@ -34,7 +31,7 @@ const Navbar = () => {
       if (deocdedToken.exp * 1000 < new Date().getTime()) logoutHandler();
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]); // * When location changes, setUser()
+  }, [location, user, logoutHandler]); // * When location changes, setUser()
 
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
