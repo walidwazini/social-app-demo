@@ -1,16 +1,20 @@
 import Axios from 'axios'
 import * as api from '../api'
-import { FETCH_ALL, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH } from '../constants/actionTypes'
+import {
+  FETCH_ALL, START_LOADING, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH
+} from '../constants/actionTypes'
 
 // Actions Creators
 export const getPosts = (page) => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING })
     // const response = await api.fetchPosts()   
     const response = await Axios.get(`http://localhost:5000/posts?page=${page}`)
     const responseData = response.data
 
     console.log(responseData)
     dispatch({ type: FETCH_ALL, payload: responseData })
+    dispatch({ type: END_LOADING })
 
   } catch (err) {
     console.log(err)
@@ -20,8 +24,10 @@ export const getPosts = (page) => async (dispatch) => {
 export const getPostBySearch = searchQuery => async (dispatch) => {
   console.log(searchQuery)
   try {
+    dispatch({ type: START_LOADING })
     const { data: { data } } = await api.fetchPostBySearch(searchQuery)
     dispatch({ type: FETCTH_BY_SEARCH, payload: data })
+    dispatch({ type: END_LOADING })
     console.log(data)
   } catch (err) {
     console.log(err)
@@ -30,9 +36,11 @@ export const getPostBySearch = searchQuery => async (dispatch) => {
 
 export const getPostByTitle = searchQ => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING })
     const { data: { data } } = await api.fetchPostByTitle(searchQ)
     dispatch({ type: FETCTH_BY_SEARCH, payload: data })
     console.log(data)
+    dispatch({ type: END_LOADING })
   } catch (err) {
     console.log(err)
   }
@@ -40,6 +48,7 @@ export const getPostByTitle = searchQ => async (dispatch) => {
 
 export const createPost = post => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING })
     const response = await api.createPost(post)
     const responseData = response.data
 
