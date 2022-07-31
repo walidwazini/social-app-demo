@@ -22,6 +22,8 @@ export const fetchPosts = () => {
   axios.get('http://localhost:5000/posts')
 }
 
+export const fetchSinglePost = id => API.get(`/posts/${id}`)
+
 export const fetchPostBySearch =
   searchQuery => API.get(`${postUrl}/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import * as api from '../api'
 import {
-  FETCH_ALL, START_LOADING, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH
+  FETCH_ALL, START_LOADING, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH, FETCH_POST
 } from '../constants/actionTypes'
 
 // Actions Creators
@@ -14,6 +14,20 @@ export const getPosts = (page) => async (dispatch) => {
 
     console.log(responseData)
     dispatch({ type: FETCH_ALL, payload: responseData })
+    dispatch({ type: END_LOADING })
+
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const getSinglePost = postId => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING })
+    const { data } = await Axios.get(`http://localhost:5000/posts/${postId}`)
+    console.log(data)
+
+    dispatch({ type: FETCH_POST, payload: data })
     dispatch({ type: END_LOADING })
 
   } catch (err) {

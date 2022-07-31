@@ -32,7 +32,7 @@ const Home = () => {
   const query = useQuery();
   const history = useHistory();
   const page = query.get("page") || 1;
-  // const searchQuery = query.get("searchQuery");
+  const searchQuery = query.get("searchQuery");
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -136,10 +136,12 @@ const Home = () => {
                 Search
               </Button>
             </AppBar> */}
+            {!searchQuery && !tags.length && (
+              <Paper className={classes.pagination} elevation={6}>
+                <Paginate page={page} />
+              </Paper>
+            )}
             <Form currentId={currentId} setCurrentId={setCurrentId} />
-            <Paper className={classes.pagination} elevation={6}>
-              <Paginate page={page} />
-            </Paper>
           </Grid>
         </Grid>
       </Container>
