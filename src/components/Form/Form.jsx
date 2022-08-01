@@ -109,7 +109,8 @@ const Form = ({ currentId, setCurrentId }) => {
           name='title'
           variant='outlined'
           label='Title'
-          style={{ color: "whitesmoke !important" }}
+          // style={{ color: "whitesmoke !important" }}
+          className={classes.input}
           fullWidth
           value={postData.title || ""}
           onChange={(ev) =>
@@ -120,6 +121,7 @@ const Form = ({ currentId, setCurrentId }) => {
           name='message'
           variant='outlined'
           label='Message'
+          className={classes.input}
           fullWidth
           value={postData.message || ""}
           onChange={(ev) =>
@@ -131,6 +133,7 @@ const Form = ({ currentId, setCurrentId }) => {
           variant='outlined'
           label='Tags'
           fullWidth
+          className={classes.input}
           value={postData.tags || ""}
           onChange={(ev) =>
             setPostData({ ...postData, tags: ev.target.value.split(",") })

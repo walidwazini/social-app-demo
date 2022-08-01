@@ -18,10 +18,16 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     // color: 'white'
   },
+  input: {
+    color: 'black',
+    backgroundColor: 'white'
+  },
   fileInput: {
     width: '97%',
     margin: '10px 0',
-    color: 'white'
+    color: 'white',
+    marginTop: '10px',
+    marginBottom: '20px',
   },
   buttonSubmit: {
     marginBottom: 10,

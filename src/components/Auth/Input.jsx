@@ -20,6 +20,10 @@ const Input = ({
         variant='outlined'
         required={required}
         fullWidth
+        style={{
+          backgroundColor: "wheat",
+          color: "black",
+        }}
         label={label}
         autoFocus={autoFocus}
         type={type}

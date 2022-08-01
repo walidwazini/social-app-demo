@@ -19,7 +19,7 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '15px',
     backgroundColor: '#14202A',
-    height: '100%',
+    height: '420px',
     position: 'relative',
     color: 'white',
 
@@ -48,8 +48,23 @@ export default makeStyles({
     padding: '0 16px',
     color: 'white',
   },
+  ellipsisText: {
+    //   Base properties
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+
+    // ? For single line 
+    // whiteSpace: 'nowrap'
+
+    //  For multine
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 4,
+    display: "-webkit-box",
+  },
   cardActions: {
-    padding: '0 16px 8px 16px',
+    padding: '0 16px 10px 16px',
+    // backgroundColor: 'lightblue',
+    // paddingBottom: '10px',
     display: 'flex',
     justifyContent: 'space-between',
   },

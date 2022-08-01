@@ -78,7 +78,9 @@ const Auth = () => {
           {/* <LockOutlinedIcon /> */}
           <LockOutlined />
         </Avatar>
-        <Typography variant='h5'>{isSignup ? "Sign Up" : "Sign In"}</Typography>
+        <Typography style={{ color: "white" }} variant='h5'>
+          {isSignup ? "Sign Up" : "Sign In"}
+        </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {isSignup && (
@@ -131,10 +133,12 @@ const Auth = () => {
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
-          <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
+          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
+          </div>
           <Grid container justifyContent='flex-end'>
             <Grid item>
-              <Button onClick={switchMode}>
+              <Button style={{ color: "white" }} onClick={switchMode}>
                 {isSignup ? "Switch to Login" : "Switch to Sign Up"}
               </Button>
             </Grid>

@@ -39,24 +39,29 @@ const PostItem = ({ post, setCurrentId }) => {
         (like) => like === (user?.result?.googleId || user?.result?._id)
       ) ? (
         <>
-          <ThumbUpAltIcon fontSize='small' />
+          <ThumbUpAltIcon fontSize='small' style={{ color: "white" }} />
           &nbsp;
-          {post.likes.length > 2
-            ? `You and ${post.likes.length - 1} others`
-            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          <div style={{ color: "white" }}>
+            {post.likes.length > 2
+              ? `You and ${post.likes.length - 1} others`
+              : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          </div>
         </>
       ) : (
         <>
-          <ThumbUpAltOutlined fontSize='small' />
-          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          <ThumbUpAltOutlined fontSize='small' style={{ color: "white" }} />
+          <div style={{ color: "white" }}>
+            &nbsp;{post.likes.length} &nbsp;
+            {post.likes.length === 1 ? "Like" : "Likes"}
+          </div>
         </>
       );
     }
 
     return (
       <>
-        <ThumbUpAltOutlined fontSize='small' />
-        &nbsp;Like
+        <ThumbUpAltOutlined fontSize='small' style={{ color: "gray" }} />
+        <div style={{ color: "gray" }}> &nbsp; Like</div>
       </>
     );
   };
@@ -107,7 +112,11 @@ const PostItem = ({ post, setCurrentId }) => {
           {post.title}
         </Typography>
         <CardContent>
-          <Typography variant='body2' sx={{ color: "white" }} component='p'>
+          <Typography
+            variant='body2'
+            className={classes.ellipsisText}
+            component='p'
+          >
             {post.message}
           </Typography>
         </CardContent>
@@ -115,7 +124,7 @@ const PostItem = ({ post, setCurrentId }) => {
       <CardActions className={classes.cardActions}>
         <Button
           size='small'
-          color='primary'
+          style={{ color: "white" }}
           disabled={!user?.result}
           onClick={() => dispatch(likePost(post._id))}
         >
@@ -125,10 +134,10 @@ const PostItem = ({ post, setCurrentId }) => {
           user?.result?._id === post?.creator) && (
           <Button
             size='small'
-            color='primary'
+            style={{ color: "#C75151" }}
             onClick={() => dispatch(removePost(post._id))}
           >
-            <DeleteIcon fontSize='medium' /> Delete
+            <DeleteIcon fontSize='medium' style={{ color: "#C75151" }} /> Delete
           </Button>
         )}
       </CardActions>
