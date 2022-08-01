@@ -31,7 +31,7 @@ const Navbar = () => {
       if (deocdedToken.exp * 1000 < new Date().getTime()) logoutHandler();
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location, user, logoutHandler]); // * When location changes, setUser()
+  }, [location, logoutHandler, user?.token]); // * When location changes, setUser()
 
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>

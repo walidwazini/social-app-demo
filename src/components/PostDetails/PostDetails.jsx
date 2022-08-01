@@ -11,7 +11,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 // import CommentSection from './CommentSection';
 import useStyles from "./postDetails-styles";
-import { getSinglePost } from "../../actions/posts";
+import { getSinglePost, getPostBySearch } from "../../actions/posts";
 
 const PostDetails = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,14 @@ const PostDetails = () => {
 
   useEffect(() => {
     dispatch(getSinglePost(id));
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    if (post) {
+      console.log(post?.tags);
+      dispatch(getPostBySearch({ search: "none", tags: post?.tags.join(",") }));
+    }
+  }, [post]);
 
   if (!post) return null;
 
@@ -34,6 +41,8 @@ const PostDetails = () => {
       </Paper>
     );
   }
+
+  const recomendedPosts = posts.filter(({ _id }) => _id === post._id);
 
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px " }}>
