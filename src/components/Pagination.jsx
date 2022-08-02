@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 
 const Paginate = ({ page }) => {
   const classes = useStyles();
-  const { numberOfPages } = useSelector((state) => state.posts);
+  const { numOfPages } = useSelector((state) => state.posts);
+  console.log(numOfPages);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Paginate = ({ page }) => {
   return (
     <Pagination
       classes={{ ul: classes.ul }}
-      count={numberOfPages}
+      count={numOfPages}
       page={Number(page) || 1}
       variant='outlined'
       color='primary'

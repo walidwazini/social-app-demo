@@ -21,7 +21,8 @@ import { GOOGLE_AUTH } from "../../constants/actionTypes";
 // import Icon from "./icon";
 
 const initialState = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
