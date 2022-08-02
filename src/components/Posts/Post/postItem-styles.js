@@ -58,7 +58,7 @@ export default makeStyles({
 
     //  For multine
     WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 4,
+    WebkitLineClamp: 3,
     display: "-webkit-box",
   },
   cardActions: {

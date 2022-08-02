@@ -1,8 +1,10 @@
 import Axios from 'axios'
+
 import * as api from '../api'
 import {
   FETCH_ALL, START_LOADING, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH, FETCH_POST
 } from '../constants/actionTypes'
+
 
 // Actions Creators
 export const getPosts = (page) => async (dispatch) => {
@@ -62,12 +64,14 @@ export const getPostByTitle = searchQ => async (dispatch) => {
   }
 }
 
-export const createPost = post => async (dispatch) => {
+export const createPost = (post, history) => async (dispatch) => {
+
   try {
     dispatch({ type: START_LOADING })
     const response = await api.createPost(post)
     const responseData = response.data
 
+    history.push(`/posts/${responseData._id}`)
     dispatch({ type: CREATE, payload: responseData })
   } catch (err) {
     console.log(err.message)

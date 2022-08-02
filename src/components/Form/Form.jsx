@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 // import FileBase from "react-file-base64";
@@ -15,12 +16,13 @@ const Form = ({ currentId, setCurrentId }) => {
   };
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [postData, setPostData] = useState(initialState);
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const edittingPost = useSelector((state) => {
     return currentId
-      ? state.posts.find((post) => {
+      ? state.posts.posts.find((post) => {
           return post._id === currentId;
         })
       : null;
@@ -65,10 +67,10 @@ const Form = ({ currentId, setCurrentId }) => {
         updatePost(currentId, { ...postData, name: user?.result?.name })
       );
     } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost({ ...postData, name: user?.result?.name }, history));
     }
-
     clearInput();
+    // history.push("/");
   };
 
   if (!user?.result?.name) {

@@ -68,36 +68,36 @@ const PostItem = ({ post, setCurrentId }) => {
 
   return (
     <Card className={classes.card}>
+      <CardMedia
+        className={classes.media}
+        component='div'
+        image={post.selectedFile}
+        title={post.title}
+      />
+      <div className={classes.overlay}>
+        <Typography variant='h6'>{post.name} </Typography>
+        <Typography variant='body2'>
+          {moment(post.createdAt).fromNow()}
+        </Typography>
+      </div>
+      {(user?.result?.googleId === post?.creator ||
+        user?.result?._id === post?.creator) && (
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            size='small'
+            onClick={() => moreHorizonHandler(post._id)}
+          >
+            <MoreHorizIcon fontSize='medium' />
+          </Button>
+        </div>
+      )}
       <ButtonBase
         component='span'
         name='test'
         className={classes.cardAction}
         onClick={openPost}
       >
-        <CardMedia
-          className={classes.media}
-          component='div'
-          image={post.selectedFile}
-          title={post.title}
-        />
-        <div className={classes.overlay}>
-          <Typography variant='h6'>{post.name} </Typography>
-          <Typography variant='body2'>
-            {moment(post.createdAt).fromNow()}
-          </Typography>
-        </div>
-        {(user?.result?.googleId === post?.creator ||
-          user?.result?._id === post?.creator) && (
-          <div className={classes.overlay2}>
-            <Button
-              style={{ color: "white" }}
-              size='small'
-              onClick={() => moreHorizonHandler(post._id)}
-            >
-              <MoreHorizIcon fontSize='medium' />
-            </Button>
-          </div>
-        )}
         <div className={classes.details}>
           <Typography variant='body2' sx={{ color: "white" }} component='h2'>
             {post.tags.map((tag) => `#${tag} `)}
@@ -121,6 +121,7 @@ const PostItem = ({ post, setCurrentId }) => {
           </Typography>
         </CardContent>
       </ButtonBase>
+
       <CardActions className={classes.cardActions}>
         <Button
           size='small'

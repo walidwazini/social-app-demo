@@ -107,7 +107,11 @@ const PostDetails = () => {
                 <Typography gutterBottom variant='subtitle2'>
                   {post.name}
                 </Typography>
-                <Typography gutterBottom variant='subtitle2'>
+                <Typography
+                  gutterBottom
+                  variant='subtitle2'
+                  className={classes.ellipsisText}
+                >
                   {post.message}
                 </Typography>
                 <Typography gutterBottom variant='subtitle1'>
