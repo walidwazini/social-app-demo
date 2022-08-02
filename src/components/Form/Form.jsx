@@ -54,7 +54,6 @@ const Form = ({ currentId, setCurrentId }) => {
   const clearInput = () => {
     setCurrentId(null);
     setPostData(initialState);
-    console.log(postData);
   };
 
   const handleSubmit = (ev) => {
@@ -109,6 +108,7 @@ const Form = ({ currentId, setCurrentId }) => {
           name='title'
           variant='outlined'
           label='Title'
+          required={true}
           // style={{ color: "whitesmoke !important" }}
           className={classes.input}
           fullWidth
@@ -121,6 +121,7 @@ const Form = ({ currentId, setCurrentId }) => {
           name='message'
           variant='outlined'
           label='Message'
+          required={true}
           className={classes.input}
           fullWidth
           value={postData.message || ""}
@@ -133,6 +134,7 @@ const Form = ({ currentId, setCurrentId }) => {
           variant='outlined'
           label='Tags'
           fullWidth
+          required={true}
           className={classes.input}
           value={postData.tags || ""}
           onChange={(ev) =>
@@ -140,7 +142,11 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
         <div className={classes.fileInput}>
-          <input type='file' onChange={(e) => uploadImage(e)} />
+          <input
+            // value={postData.selectedFile || ""}
+            type='file'
+            onChange={(e) => uploadImage(e)}
+          />
         </div>
         <Button
           className={classes.buttonSubmit}

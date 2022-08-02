@@ -17,9 +17,13 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { id } = useParams();
-  const { post, posts, isLoading } = useSelector((state) => state.posts);
-  console.log(post);
+  const postState = useSelector((state) => state.posts);
+  const { post, posts, isLoading } = postState;
   const history = useHistory();
+
+  const openPost = (postId) => {
+    history.push(`/posts/${postId}`);
+  };
 
   useEffect(() => {
     dispatch(getSinglePost(id));
@@ -27,7 +31,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     if (post) {
-      console.log(post?.tags);
+      // console.log(postState);
       dispatch(getPostBySearch({ search: "none", tags: post?.tags.join(",") }));
     }
   }, [post]);
@@ -42,8 +46,8 @@ const PostDetails = () => {
     );
   }
 
-  const recomendedPosts = posts.filter(({ _id }) => _id === post._id);
-
+  const recomendedPosts = posts.filter(({ _id }) => _id !== post._id);
+  console.log(postState);
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px " }}>
       <div className={classes.card}>
@@ -85,6 +89,36 @@ const PostDetails = () => {
           />
         </div>
       </div>
+      {recomendedPosts.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant='h5'>
+            You might also like
+          </Typography>
+          <div className={classes.recommendedPosts}>
+            {recomendedPosts.map((post) => (
+              <div
+                onClick={() => openPost(post._id)}
+                style={{ margin: "20px", cursor: "pointer" }}
+                key={post._id}
+              >
+                <Typography gutterBottom variant='h6'>
+                  {post.title}
+                </Typography>
+                <Typography gutterBottom variant='subtitle2'>
+                  {post.name}
+                </Typography>
+                <Typography gutterBottom variant='subtitle2'>
+                  {post.message}
+                </Typography>
+                <Typography gutterBottom variant='subtitle1'>
+                  Likes: {post.likes.length}
+                </Typography>
+                <img src={post.selectedFile} width='200px' />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </Paper>
   );
 };

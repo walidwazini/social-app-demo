@@ -11,9 +11,10 @@ export const getPosts = (page) => async (dispatch) => {
     // const response = await api.fetchPosts()   
     const response = await Axios.get(`http://localhost:5000/posts?page=${page}`)
     const responseData = response.data
+    const { data, currentPage, numOfPages } = responseData
+    // console.log(responseData)
 
-    console.log(responseData)
-    dispatch({ type: FETCH_ALL, payload: responseData })
+    dispatch({ type: FETCH_ALL, payload: { data, currentPage, numOfPages } })
     dispatch({ type: END_LOADING })
 
   } catch (err) {
@@ -27,7 +28,7 @@ export const getSinglePost = postId => async (dispatch) => {
     const { data } = await Axios.get(`http://localhost:5000/posts/${postId}`)
     console.log(data)
 
-    dispatch({ type: FETCH_POST, payload: data })
+    dispatch({ type: FETCH_POST, payload: { post: data } })
     dispatch({ type: END_LOADING })
 
   } catch (err) {
@@ -36,13 +37,14 @@ export const getSinglePost = postId => async (dispatch) => {
 }
 
 export const getPostBySearch = searchQuery => async (dispatch) => {
-  console.log(searchQuery)
   try {
     dispatch({ type: START_LOADING })
-    const { data: { data } } = await api.fetchPostBySearch(searchQuery)
-    dispatch({ type: FETCTH_BY_SEARCH, payload: data })
-    dispatch({ type: END_LOADING })
+    console.log(searchQuery)
+    const { data } = await api.fetchPostBySearch(searchQuery)
+    const { searchResult } = data
     console.log(data)
+    dispatch({ type: FETCTH_BY_SEARCH, payload: { data: searchResult } })
+    dispatch({ type: END_LOADING })
   } catch (err) {
     console.log(err)
   }

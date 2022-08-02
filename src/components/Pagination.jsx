@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const Paginate = ({ page }) => {
   const classes = useStyles();
   const { numOfPages } = useSelector((state) => state.posts);
-  console.log(numOfPages);
   const dispatch = useDispatch();
 
   useEffect(() => {

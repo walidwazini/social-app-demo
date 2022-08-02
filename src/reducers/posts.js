@@ -6,11 +6,12 @@ import {
 export default (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
+      // console.log(state)
       return { ...state, isLoading: true }
     case END_LOADING:
+      // console.log(state)
       return { ...state, isLoading: false }
     case FETCH_ALL:
-      console.log(action.payload)
       return {
         ...state,
         posts: action.payload.data,
@@ -18,12 +19,11 @@ export default (state = { isLoading: true, posts: [] }, action) => {
         numOfPages: action.payload.numOfPages
       }
     case FETCTH_BY_SEARCH:
-      return {
-        ...state,
-        posts: action.payload,
-      }
+      console.log(state)
+      return { ...state, posts: action.payload.data }
     case FETCH_POST:
-      return { ...state, post: action.payload }
+      console.log(state)
+      return { ...state, post: action.payload.post }
     case CREATE:
       return { ...state, posts: [...state.posts, action.payload] }
     case UPDATE:
