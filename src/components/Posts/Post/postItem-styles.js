@@ -19,9 +19,14 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '15px',
     backgroundColor: '#14202A',
+    // backgroundColor: '',
     height: '420px',
     position: 'relative',
     color: 'white',
+    transition: "background 0.45s",
+    '&:hover': {
+      backgroundColor: '#30495e'
+    }
 
   },
   overlay: {

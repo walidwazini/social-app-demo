@@ -152,6 +152,7 @@ const Form = ({ currentId, setCurrentId }) => {
         </div>
         <Button
           className={classes.buttonSubmit}
+          disabled={!postData.title || !postData.message}
           variant='contained'
           color='primary'
           size='large'

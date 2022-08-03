@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useHistory } from "react-router-dom";
 
-// import CommentSection from './CommentSection';
+import CommentSection from "./CommentSection";
 import useStyles from "./postDetails-styles";
 import { getSinglePost, getPostBySearch } from "../../actions/posts";
 
@@ -27,7 +27,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     dispatch(getSinglePost(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (post) {
@@ -75,7 +75,9 @@ const PostDetails = () => {
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
-          {/* <CommentSection post={post} /> */}
+
+          <CommentSection post={post} />
+
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div className={classes.imageSection}>
@@ -117,7 +119,7 @@ const PostDetails = () => {
                 <Typography gutterBottom variant='subtitle1'>
                   Likes: {post.likes.length}
                 </Typography>
-                <img src={post.selectedFile} width='200px' />
+                <img alt={post.title} src={post.selectedFile} width='200px' />
               </div>
             ))}
           </div>
