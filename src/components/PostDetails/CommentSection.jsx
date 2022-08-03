@@ -3,14 +3,22 @@ import { Typography, TextField, Button } from "@material-ui/core/";
 import { useDispatch } from "react-redux";
 
 import useStyles from "./comment-styles";
+import { commentPost } from "../../actions/posts";
 
 const CommentSection = ({ post }) => {
-  console.log(post);
   const classes = useStyles();
   const dispatch = useDispatch();
   const [commentList, setCommentList] = useState([1, 2, 3]);
   const [comment, setComment] = useState("");
-  const handleClick = () => {};
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  console.log(user.result.name);
+
+  const handleClick = () => {
+    const finalComment = `${user.result.name} : ${comment}`;
+
+    dispatch(commentPost(finalComment, post._id));
+  };
 
   return (
     <div>
@@ -31,7 +39,7 @@ const CommentSection = ({ post }) => {
           </Typography>
           <TextField
             fullWidth
-            rows={4}
+            minRows={4}
             variant='outlined'
             label='Comment'
             multiline
