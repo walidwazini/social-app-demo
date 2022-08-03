@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 import * as api from '../api'
 import {
-  FETCH_ALL, START_LOADING, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH, FETCH_POST
+  FETCH_ALL, START_LOADING, COMMENT, END_LOADING, CREATE, DELETE, UPDATE, FETCTH_BY_SEARCH, FETCH_POST
 } from '../constants/actionTypes'
 
 
@@ -108,7 +108,11 @@ export const likePost = (id) => async (dispatch) => {
 
 export const commentPost = (newComment, userId) => async (dispatch) => {
   try {
-    await api.comment(newComment, userId)
+    const { data } = await api.comment(newComment, userId)
+
+    dispatch({ type: COMMENT, payload: data })
+
+    return data.comments
   } catch (err) {
     console.log(err)
   }

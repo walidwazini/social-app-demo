@@ -44,5 +44,4 @@ export const signIn = (formData) => API.post(`${authUrl}/signIn`, formData)
 
 export const signUp = (formData) => API.post(`${authUrl}/signUp`, formData)
 
-export const comment = (value, id) => console.log(`${postUrl}/${id}/commentPost`)
-// API.post(`${postUrl}/${id}/commentPost`, { value })
+export const comment = (value, id) => API.post(`${postUrl}/${id}/commentPost`, { value })
