@@ -76,12 +76,12 @@ const Navbar = () => {
           </div>
         ) : (
           <Button
-            component={Link}
-            to='/auth'
+            // component={Link}
+            // to='/auth'
             variant='contained'
             className={classes.login}
             color='primary'
-            onClick={() => {}}
+            onClick={() => history.push("/auth")}
           >
             Login
             {/* <Link to='/auth'>Link</Link> */}

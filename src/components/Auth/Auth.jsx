@@ -8,7 +8,7 @@ import {
   Container,
 } from "@material-ui/core";
 // import { GoogleLogin } from "react-google-login";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { LockOutlined } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -55,13 +55,23 @@ const Auth = () => {
   const switchMode = () => setIsSignup((prevState) => !prevState);
 
   const googleSuccess = async (res) => {
-    console.log(res);
-    // const result = res?.profileObj;
-    const token = res?.credential;
-    const decodedToken = jwtDecode(token); // ? Can also be named as 'result'
+    // ? This will serve as redux actions
+    const googleCredential = res?.credential;
+    const decodedToken = jwtDecode(googleCredential); // ? Can also be named as 'result'
+
+    console.log(googleCredential);
+    console.log(decodedToken);
+
+    // ! We need { result :{_id,name,email},token }
+    // * result will be stoe into localStorage
+    // * googleCredential be used as token because is .length > 500
 
     try {
-      dispatch({ type: GOOGLE_AUTH, data: { token, decodedToken } });
+      // ! We direct to the reducers
+      dispatch({
+        type: GOOGLE_AUTH,
+        data: { token: googleCredential, result: decodedToken },
+      });
       history.push("/");
     } catch (err) {
       console.log(err);
