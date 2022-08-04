@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Typography, TextField, Button } from "@material-ui/core/";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -13,13 +13,15 @@ const CommentSection = ({ post }) => {
   const [comment, setComment] = useState("");
   const user = JSON.parse(localStorage.getItem("profile"));
   const history = useHistory();
+  const commentsRef = useRef();
 
   const handleClick = async () => {
     const finalComment = `${user?.result?.name} : ${comment}`;
     const newComments = await dispatch(commentPost(finalComment, post._id));
     setCommentList(newComments);
     setComment("");
-    history.push(`/posts/${post._id}`);
+
+    commentsRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -34,6 +36,7 @@ const CommentSection = ({ post }) => {
               {c}
             </Typography>
           ))}
+          <div ref={commentsRef} />
         </div>
         {user && (
           <div style={{ width: "70%" }}>

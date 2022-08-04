@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -24,7 +24,11 @@ const PostItem = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [likes, setLikes] = useState(post?.likes);
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  const OnlineUser = user?.result?.googleId || user?.result._id; // current online user
+  const hasLikedPost = post.likes.find((like) => like === OnlineUser);
 
   const moreHorizonHandler = (postId) => {
     setCurrentId(postId);
@@ -32,6 +36,17 @@ const PostItem = ({ post, setCurrentId }) => {
   };
 
   const openPost = () => history.push(`/posts/${post._id}`);
+
+  const handleLike = async () => {
+    dispatch(likePost(post._id));
+
+    // * did the current user like the post?
+    if (hasLikedPost) {
+      setLikes(post.likes.filter((id) => id !== OnlineUser));
+    } else {
+      setLikes([...post.likes, OnlineUser]);
+    }
+  };
 
   const Likes = () => {
     if (post?.likes?.length > 0) {
